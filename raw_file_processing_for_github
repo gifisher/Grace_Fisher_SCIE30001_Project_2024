@@ -1,0 +1,53 @@
+#install required package for company to server download facilitation
+cd /data/scratch/projects/punim1214
+wget https://gosspublic.alicdn.com/ossutil/1.7.10/ossutil64
+
+#change permissions
+
+chmod 777 ossutil64
+
+#download raw files using passcodes obtained in email from company
+#set variables
+export oss_path="oss://gwasia/2024.9/30-1070643705/"
+export local_dir="/data/scratch/projects/punim1214/nicoleRNAseq"
+export endpoint="oss-cn-hongkong.aliyuncs.com"
+export accessKeyID="LTAI5tEnywzcNfTpUvJ86KBJ"
+export accessKeySecret="XCS1oOnT4Jz0LrMLZNyqLTHFUCMvtg"
+
+#run ossutil
+/data/scratch/projects/punim1214/ossutil64 cp -rf $oss_path $local_dir -u --jobs=4 --parallel=16 -e $endpoint -i $accessKeyID -k $accessKeySecret
+
+#md5 check using files provided in data download
+
+md5sum -c md5.md5
+
+#if all lines say 'OK' at the end we are ok. they all said OK.
+
+#run fastQC for quality checks on raw data files
+#load module
+module load FastQC/0.12.1-Java-11
+
+#run for all fq.gz files in raw data directoy
+fastqc *fq.gz
+
+#run fastqc summary script in R
+
+#make refs dir for reference genome: /data/scratch/projects/punim1214/nicoleRNAseq/refs
+#download arabidopsis reference genome - used Col-0 version 10.1. manually downloaded from internet and scp file transferred from local machine. download link: https://www.ncbi.nlm.nih.gov/datasets/taxonomy/3702/ accessed 25/09/2024
+
+#trim off adapters and low quality bases from raw reads
+#run "run_trimmomatic.sh" script. ensure to change directories and file names for this specific purpose.
+
+#index the reference genome using bwa
+module load BWA/0.7.17
+module load bwa-mem2/2.2.1
+module load GCCcore/11.3.0
+
+bwa index GCF_000001735.4_TAIR10.1_genomic.fna
+
+#run "bwa_to_bam.sh" script to align fastq read files to indexed reference genome. output in .bam format
+
+#run "sort_and_index_bam.sh" script to sort and index the bam files. This gives alignment and quantitative data in a file which is readily useable in downstream packages. (output sorted.bam)
+
+#run "stringtie_batch.sh" script to run stringtie on all sorted bam files. stringtie directly quantifies aligned reads. including the -B option in the command prepares the output for the downstream R package Ballgown.
+#stringtie requires a .gtf annotation file for the reference genome to run in this way
