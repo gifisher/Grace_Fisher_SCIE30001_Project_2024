@@ -9,3 +9,5 @@ run sort_and_index_bam.sh script. sorts reads for downstream analysis and gives 
 run stringtie_batch.sh script. directly quantify aligned reads. 
 data_normalization_and_anova.R - extract transcript sequences quantification and identities and store in a list. normalize data using DESeq2. perform anova on the 3 treatment levels (col, luh and ABI).sort by significance and fold change. 
 volcano plot.R: calculate log2 fold change between all treatment levels. make volcano plots using EnhancedVolcano. 
+
+code courtesy of krodgers20. 
