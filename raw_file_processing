@@ -1,6 +1,5 @@
 #install required package for company to server download facilitation
 cd /data/scratch/projects/punim1214
-wget https://gosspublic.alicdn.com/ossutil/1.7.10/ossutil64
 
 #change permissions
 
@@ -8,11 +7,6 @@ chmod 777 ossutil64
 
 #download raw files using passcodes obtained in email from company
 #set variables
-export oss_path="oss://gwasia/2024.9/30-1070643705/"
-export local_dir="/data/scratch/projects/punim1214/nicoleRNAseq"
-export endpoint="oss-cn-hongkong.aliyuncs.com"
-export accessKeyID="LTAI5tEnywzcNfTpUvJ86KBJ"
-export accessKeySecret="XCS1oOnT4Jz0LrMLZNyqLTHFUCMvtg"
 
 #run ossutil
 /data/scratch/projects/punim1214/ossutil64 cp -rf $oss_path $local_dir -u --jobs=4 --parallel=16 -e $endpoint -i $accessKeyID -k $accessKeySecret
