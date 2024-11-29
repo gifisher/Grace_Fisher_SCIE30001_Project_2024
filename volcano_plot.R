@@ -99,3 +99,4 @@ EnhancedVolcano(normalized_counts_dt_forEnhancedVolcano,
 
 #change gene name value based on t_name (AT id)
 #normalized_counts_dt_forEnhancedVolcano$geneName[normalized_counts_dt_forEnhancedVolcano$t_name == "AT3G23630.1"] <- "IPT7"
+#normalized_counts_dt_forEnhancedVolcano$geneName[normalized_counts_dt_forEnhancedVolcano$t_name == "AT2G22330"] <- "CYP79B3"
